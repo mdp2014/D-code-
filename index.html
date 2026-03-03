@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💾 Codeur / Décodeur Binaire Fun</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #162447);
+    color: #fff;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  textarea {
+    width: 90%;
+    max-width: 600px;
+    height: 120px;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    resize: none;
+    box-shadow: 0 0 10px #00ffcc33;
+    background: #1f1f2e;
+    color: #fff;
+  }
+  .buttons {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  button {
+    background: linear-gradient(45deg, #00ffcc, #ffcc00);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #222;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+  }
+  button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+  #result {
+    margin-top: 20px;
+    width: 90%;
+    max-width: 600px;
+    min-height: 80px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #0f0f1f;
+    box-shadow: 0 0 15px #ffcc0033 inset;
+    color: #00ffcc;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .binary-chip {
+    background: #ffcc00;
+    color: #222;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<h1>💾 Codeur / Décodeur Binaire Fun</h1>
+
+<textarea id="message" placeholder="Tape ton message ici..."></textarea>
+
+<div class="buttons">
+  <button onclick="coder()">💌 Coder en binaire</button>
+  <button onclick="decoder()">🔓 Décoder du binaire</button>
+  <button onclick="copier()">📋 Copier le résultat</button>
+</div>
+
+<div id="result"></div>
+
+<script>
+function coder() {
+    const text = document.getElementById('message').value;
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = ''; // vider avant
+    for (let char of text) {
+        let bin = char.charCodeAt(0).toString(2).padStart(8, '0');
+        let chip = document.createElement('span');
+        chip.className = 'binary-chip';
+        chip.textContent = bin;
+        resultDiv.appendChild(chip);
+    }
+}
+
+function decoder() {
+    const binaryText = document.getElementById('message').value.trim();
+    const binaries = binaryText.match(/\b[01]{8}\b/g) || [];
+    let text = '';
+    for (let bin of binaries) {
+        text += String.fromCharCode(parseInt(bin, 2));
+    }
+    document.getElementById('result').innerHTML = text;
+}
+
+function copier() {
+    const content = document.getElementById('result').innerText;
+    navigator.clipboard.writeText(content);
+    alert('📋 Copié dans le presse-papier !');
+}
+</script>
+
+</body>
+</html>
